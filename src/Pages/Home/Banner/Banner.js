@@ -2,7 +2,7 @@ import bannerImg from "../../../assets/images/chair.png";
 import PrimaryButton from "../../../components/PrimaryButton";
 const Banner = () => {
   return (
-    <div className="hero banner-bg">
+    <section className="hero banner-bg">
       <div className="hero-content flex-col lg:flex-row-reverse">
         <div className="lg:w-1/2">
           <img
@@ -24,7 +24,7 @@ const Banner = () => {
           <PrimaryButton name={"Get Started"} />
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 

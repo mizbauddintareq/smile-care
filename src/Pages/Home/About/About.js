@@ -1,7 +1,7 @@
 import treatment from "../../../assets/images/treatment.png";
 const About = () => {
   return (
-    <div className="hero mt-20">
+    <section className="hero mt-20">
       <div className="hero-content flex-col lg:flex-row">
         <div className="lg:w-1/2">
           <img
@@ -26,7 +26,7 @@ const About = () => {
           </button>
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 

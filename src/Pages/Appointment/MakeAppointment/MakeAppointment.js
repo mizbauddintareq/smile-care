@@ -3,7 +3,7 @@ import PrimaryButton from "../../../components/PrimaryButton";
 
 const MakeAppointment = () => {
   return (
-    <div className="hero appointment-bg mt-20 lg:mt-40">
+    <section className="hero appointment-bg mt-20 lg:mt-40">
       <div className="hero">
         <div className="hero-content p-4 lg:p-0 flex-col lg:flex-row">
           <img
@@ -28,7 +28,7 @@ const MakeAppointment = () => {
           </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 
