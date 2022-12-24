@@ -1,4 +1,5 @@
 import bannerImg from "../../../assets/images/chair.png";
+import PrimaryButton from "../../../components/PrimaryButton";
 const Banner = () => {
   return (
     <div className="hero banner-bg">
@@ -20,9 +21,7 @@ const Banner = () => {
             often hear the term used to mean a place where dental services are
             available at a lower cost than at a private practice.
           </p>
-          <button className="btn text-white font-bold btn-primary bg-gradient-to-r from-primary to-secondary">
-            Get Started
-          </button>
+          <PrimaryButton name={"Get Started"} />
         </div>
       </div>
     </div>
