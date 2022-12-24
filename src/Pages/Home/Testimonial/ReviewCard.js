@@ -1,7 +1,7 @@
 const ReviewCard = ({ data }) => {
   const { name, location, review, image } = data;
   return (
-    <div className="card shadow-xl">
+    <div className="card dark:bg-accent shadow-xl">
       <div className="card-body">
         <p>{review}</p>
         <div className="card-actions justify-start items-center mt-6">

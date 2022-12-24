@@ -1,7 +1,7 @@
 const Service = ({ data }) => {
   const { name, description, image } = data;
   return (
-    <div className="card bg-base-100 shadow-xl">
+    <div className="card dark:bg-accent shadow-xl">
       <figure className="px-10 pt-10">
         <img src={image} alt="service-img" className="rounded-xl" />
       </figure>
