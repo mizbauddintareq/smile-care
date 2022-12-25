@@ -3,6 +3,7 @@ import Main from "../../Layouts/Main";
 import Appointment from "../../Pages/Appointment/Appointment/Appointment";
 import Login from "../../Pages/Authentication/Login/Login";
 import Registration from "../../Pages/Authentication/Registration/Registration";
+import Dashboard from "../../Pages/Dashboard/Dashboard/Dashboard";
 import Home from "../../Pages/Home/Home/Home";
 
 export const router = createBrowserRouter([
@@ -27,5 +28,9 @@ export const router = createBrowserRouter([
         element: <Appointment />,
       },
     ],
+  },
+  {
+    path: "dashboard",
+    element: <Dashboard />,
   },
 ]);

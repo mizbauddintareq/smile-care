@@ -1,8 +1,10 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../../../context/AuthProvider";
 
 const Header = () => {
   const [theme, setTheme] = useState(null);
+  const { user, logOutUser } = useContext(AuthContext);
 
   useEffect(() => {
     if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
@@ -23,6 +25,13 @@ const Header = () => {
   const handleThemeSwitch = () => {
     setTheme(theme === "dark" ? "light" : "dark");
   };
+
+  const handleLogOutUser = () => {
+    logOutUser()
+      .then(() => {})
+      .catch((error) => {});
+  };
+
   const menuItems = (
     <>
       <li>
@@ -41,7 +50,14 @@ const Header = () => {
         <Link to="/">Contact Us</Link>
       </li>
       <li>
-        <Link to="/">Login</Link>
+        {user?.uid ? (
+          <>
+            <Link to="/dashboard">Dashboard</Link>
+            <button onClick={handleLogOutUser}>Logout</button>
+          </>
+        ) : (
+          <Link to="/login">Login</Link>
+        )}
       </li>
       <li>
         {theme === "light" ? (
