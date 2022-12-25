@@ -1,14 +1,20 @@
 import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { errorAlert } from "../../../components/errorAlert";
 import ForgotPassModal from "../../../components/ForgotPassModal";
+import GoogleLogin from "../../../components/GoogleLogin";
 import { successAlert } from "../../../components/successAlert";
 import { AuthContext } from "../../../context/AuthProvider";
 
 const Login = () => {
   const [openModal, setOpenModal] = useState(true);
   const { loginUser } = useContext(AuthContext);
+
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
+
   const {
     register,
     formState: { errors },
@@ -21,6 +27,7 @@ const Login = () => {
       .then((userCredential) => {
         successAlert("Login Successful");
         reset();
+        navigate(from, { replace: true });
       })
       .catch((error) => {
         const errorCode = error.code;
@@ -88,9 +95,7 @@ const Login = () => {
               </Link>{" "}
             </p>
             <div className="divider">OR</div>
-            <button className="btn btn-outline outline-accent dark:bg-white dark:hover:text-black w-full">
-              continue with google
-            </button>
+            <GoogleLogin />
           </div>
         </div>
       </div>

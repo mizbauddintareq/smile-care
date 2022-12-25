@@ -1,12 +1,18 @@
 import { useContext } from "react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { errorAlert } from "../../../components/errorAlert";
+import GoogleLogin from "../../../components/GoogleLogin";
 import { successAlert } from "../../../components/successAlert";
 import { AuthContext } from "../../../context/AuthProvider";
 
 const Registration = () => {
   const { createUser, updateUserProfile } = useContext(AuthContext);
+
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
+
   const {
     register,
     formState: { errors },
@@ -24,6 +30,7 @@ const Registration = () => {
         handleUpdateUser(userInfo);
         successAlert("Registration Successful");
         reset();
+        navigate(from, { replace: true });
       })
       .catch((error) => {
         const errorCode = error.code;
@@ -110,9 +117,7 @@ const Registration = () => {
               </Link>{" "}
             </p>
             <div className="divider">OR</div>
-            <button className="btn btn-outline outline-accent dark:bg-white dark:hover:text-black w-full">
-              continue with google
-            </button>
+            <GoogleLogin />
           </div>
         </div>
       </div>
