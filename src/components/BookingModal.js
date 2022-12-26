@@ -1,6 +1,10 @@
 import { format } from "date-fns";
+import { useContext } from "react";
+import { AuthContext } from "../context/AuthProvider";
+import { successAlert } from "./successAlert";
 
-const BookingModal = ({ treatment, setTreatment, selectedDate }) => {
+const BookingModal = ({ treatment, setTreatment, selectedDate, refetch }) => {
+  const { user } = useContext(AuthContext);
   const date = format(selectedDate, "PP");
   const { name, slots } = treatment;
 
@@ -16,13 +20,28 @@ const BookingModal = ({ treatment, setTreatment, selectedDate }) => {
     const bookingInfo = {
       appointmentDate: date,
       slot,
-      name,
+      treatment: name,
       patientName,
       email,
       phone,
     };
-    console.log(bookingInfo);
-    setTreatment(null);
+
+    fetch("http://localhost:5000/bookings", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(bookingInfo),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.acknowledged) {
+          successAlert("Booking Confirmed");
+          setTreatment(null);
+          refetch();
+        }
+      })
+      .catch((err) => console.error(err));
   };
   return (
     <>
@@ -47,6 +66,7 @@ const BookingModal = ({ treatment, setTreatment, selectedDate }) => {
               disabled
               className="input dark:bg-slate-900 dark:text-white dark:border-accent w-full input-bordered "
             />
+
             <select
               name="slot"
               className="select dark:bg-slate-900 dark:text-white select-bordered w-full dark:border-accent"
@@ -57,24 +77,30 @@ const BookingModal = ({ treatment, setTreatment, selectedDate }) => {
                 </option>
               ))}
             </select>
+
             <input
               type="text"
               name="name"
-              placeholder="Full Name"
+              defaultValue={user?.displayName}
+              disabled
               className="input w-full dark:bg-slate-900 dark:text-white dark:border-accent input-bordered "
             />
+
+            <input
+              type="email"
+              name="email"
+              defaultValue={user?.email}
+              disabled
+              className="input w-full dark:bg-slate-900 dark:text-white dark:border-accent input-bordered "
+            />
+
             <input
               type="number"
               name="phone"
               placeholder="Phone Number"
               className="input w-full dark:bg-slate-900 dark:text-white dark:border-accent input-bordered "
             />
-            <input
-              type="email"
-              name="email"
-              placeholder="Email"
-              className="input w-full dark:bg-slate-900 dark:text-white dark:border-accent input-bordered "
-            />
+
             <input
               type="submit"
               value="submit"

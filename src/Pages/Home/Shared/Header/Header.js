@@ -49,16 +49,22 @@ const Header = () => {
       <li>
         <Link to="/">Contact Us</Link>
       </li>
-      <li>
+      <>
         {user?.uid ? (
           <>
-            <Link to="/dashboard">Dashboard</Link>
-            <button onClick={handleLogOutUser}>Logout</button>
+            <li>
+              <Link to="/dashboard">Dashboard</Link>
+            </li>
+            <li>
+              <button onClick={handleLogOutUser}>Logout</button>
+            </li>
           </>
         ) : (
-          <Link to="/login">Login</Link>
+          <li>
+            <Link to="/login">Login</Link>
+          </li>
         )}
-      </li>
+      </>
       <li>
         {theme === "light" ? (
           <button onClick={handleThemeSwitch}>
@@ -114,7 +120,7 @@ const Header = () => {
         </div>
         <Link className="btn btn-ghost normal-case text-xl">Smile Care</Link>
       </div>
-      <div className="navbar-end hidden lg:flex">
+      <div className=" hidden lg:flex">
         <ul className="menu menu-horizontal px-1">{menuItems}</ul>
       </div>
     </div>

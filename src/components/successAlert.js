@@ -1,11 +1,5 @@
-import Swal from "sweetalert2";
+import toast from "react-hot-toast";
 
 export const successAlert = (message) => {
-  Swal.fire({
-    position: "center",
-    icon: "success",
-    title: `${message}`,
-    showConfirmButton: false,
-    timer: 1500,
-  });
+  toast.success(message);
 };
