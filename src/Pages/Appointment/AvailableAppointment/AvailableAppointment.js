@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { format } from "date-fns";
 import { useState } from "react";
 import BookingModal from "../../../components/BookingModal";
+import Loader from "../../Shared/Loader/Loader";
 import AppointmentOptions from "./AppointmentOptions";
 
 const AvailableAppointment = ({ selectedDate }) => {
@@ -9,7 +10,11 @@ const AvailableAppointment = ({ selectedDate }) => {
   const [treatment, setTreatment] = useState(null);
   const date = format(selectedDate, "PP");
 
-  const { data: appointmentOptions = [], refetch } = useQuery({
+  const {
+    data: appointmentOptions = [],
+    refetch,
+    isLoading,
+  } = useQuery({
     queryKey: ["appointmentOptions", date],
     queryFn: async () => {
       const res = await fetch(
@@ -19,6 +24,10 @@ const AvailableAppointment = ({ selectedDate }) => {
       return data;
     },
   });
+
+  if (isLoading) {
+    return <Loader />;
+  }
 
   return (
     <section className="my-16">

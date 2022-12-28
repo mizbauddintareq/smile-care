@@ -1,6 +1,7 @@
 import { format } from "date-fns";
 import { useContext } from "react";
 import { AuthContext } from "../context/AuthProvider";
+import { errorAlert } from "./errorAlert";
 import { successAlert } from "./successAlert";
 
 const BookingModal = ({ treatment, setTreatment, selectedDate, refetch }) => {
@@ -39,6 +40,8 @@ const BookingModal = ({ treatment, setTreatment, selectedDate, refetch }) => {
           successAlert("Booking Confirmed");
           setTreatment(null);
           refetch();
+        } else {
+          errorAlert(data.message);
         }
       })
       .catch((err) => console.error(err));

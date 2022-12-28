@@ -1,16 +1,13 @@
 import { useContext } from "react";
 import { Navigate, useLocation } from "react-router-dom";
 import { AuthContext } from "../../context/AuthProvider";
+import Loader from "../../Pages/Shared/Loader/Loader";
 
 const PrivateRoute = ({ children }) => {
   const { user, loading } = useContext(AuthContext);
   const location = useLocation();
   if (loading) {
-    return (
-      <div className="radial-progress" style={{ "--value": 99 }}>
-        99%
-      </div>
-    );
+    return <Loader />;
   }
 
   if (user) {

@@ -23,11 +23,11 @@ const Registration = () => {
     createUser(data.email, data.password)
       .then((userCredential) => {
         // const user = userCredential.user;
-
-        const userInfo = {
+        const userProfile = {
           displayName: data.name,
         };
-        handleUpdateUser(userInfo);
+        handleUpdateUser(userProfile);
+        saveUser(data.name, data.email);
         successAlert("Registration Successful");
         reset();
         navigate(from, { replace: true });
@@ -37,11 +37,31 @@ const Registration = () => {
         errorAlert(errorCode);
       });
   };
+
+  // const update user name
   const handleUpdateUser = (info) => {
     updateUserProfile(info)
       .then(() => {})
       .catch((error) => {});
   };
+
+  // const save users info on db
+  const saveUser = (name, email) => {
+    const usersInfo = { name, email };
+
+    fetch("http://localhost:5000/users", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(usersInfo),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+      });
+  };
+
   return (
     <section className="my-16">
       <div className="lg:w-4/12 w-full mx-auto dark:bg-accent">
