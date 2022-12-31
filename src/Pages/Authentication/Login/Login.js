@@ -6,14 +6,21 @@ import ForgotPassModal from "../../../components/ForgotPassModal";
 import GoogleLogin from "../../../components/GoogleLogin";
 import { successAlert } from "../../../components/successAlert";
 import { AuthContext } from "../../../context/AuthProvider";
+import useToken from "../../../hooks/useToken";
 
 const Login = () => {
   const [openModal, setOpenModal] = useState(true);
   const { loginUser } = useContext(AuthContext);
+  const [loginUserEmail, setLoginUserEmail] = useState("");
+  const [token] = useToken(loginUserEmail);
 
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
+
+  if (token) {
+    navigate(from, { replace: true });
+  }
 
   const {
     register,
@@ -25,9 +32,9 @@ const Login = () => {
   const onSubmit = (data) => {
     loginUser(data.email, data.password)
       .then((userCredential) => {
+        setLoginUserEmail(data.email);
         successAlert("Login Successful");
         reset();
-        navigate(from, { replace: true });
       })
       .catch((error) => {
         const errorCode = error.code;

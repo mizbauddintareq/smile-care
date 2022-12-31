@@ -1,17 +1,24 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { errorAlert } from "../../../components/errorAlert";
 import GoogleLogin from "../../../components/GoogleLogin";
 import { successAlert } from "../../../components/successAlert";
 import { AuthContext } from "../../../context/AuthProvider";
+import useToken from "../../../hooks/useToken";
 
 const Registration = () => {
   const { createUser, updateUserProfile } = useContext(AuthContext);
+  const [createdUserEmail, setCreatedUserEmail] = useState("");
+  const [token] = useToken(createdUserEmail);
 
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
+
+  if (token) {
+    navigate(from, { replace: true });
+  }
 
   const {
     register,
@@ -30,7 +37,6 @@ const Registration = () => {
         saveUser(data.name, data.email);
         successAlert("Registration Successful");
         reset();
-        navigate(from, { replace: true });
       })
       .catch((error) => {
         const errorCode = error.code;
@@ -58,7 +64,7 @@ const Registration = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
+        setCreatedUserEmail(email);
       });
   };
 
