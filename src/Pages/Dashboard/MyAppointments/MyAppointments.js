@@ -1,12 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
 import { useContext } from "react";
+import { Link } from "react-router-dom";
 import { AuthContext } from "../../../context/AuthProvider";
 import Loader from "../../Shared/Loader/Loader";
 
 const MyAppointments = () => {
   const { user } = useContext(AuthContext);
 
-  const url = `http://localhost:5000/bookings?email=${user?.email}`;
+  const url = `https://smile-care-server.vercel.app/bookings?email=${user?.email}`;
 
   const { data: bookings, isLoading } = useQuery({
     queryKey: ["bookings", user?.email],
@@ -39,6 +40,7 @@ const MyAppointments = () => {
               <th>Treatment</th>
               <th>Date</th>
               <th>Time</th>
+              <th>Payment</th>
             </tr>
           </thead>
           <tbody>
@@ -49,6 +51,16 @@ const MyAppointments = () => {
                 <td>{booking.treatment}</td>
                 <td>{booking.appointmentDate}</td>
                 <td>{booking.slot}</td>
+                <td>
+                  {booking.price && !booking.paid && (
+                    <Link to={`/dashboard/payment/${booking._id}`}>
+                      <button className="btn btn-secondary btn-sm">pay</button>
+                    </Link>
+                  )}
+                  {booking.price && booking.paid && (
+                    <span className="text-success">Paid</span>
+                  )}
+                </td>
               </tr>
             ))}
           </tbody>

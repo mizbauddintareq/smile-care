@@ -7,7 +7,7 @@ import { successAlert } from "./successAlert";
 const BookingModal = ({ treatment, setTreatment, selectedDate, refetch }) => {
   const { user } = useContext(AuthContext);
   const date = format(selectedDate, "PP");
-  const { name, slots } = treatment;
+  const { name, slots, price } = treatment;
 
   const handleBooking = (e) => {
     e.preventDefault();
@@ -25,9 +25,10 @@ const BookingModal = ({ treatment, setTreatment, selectedDate, refetch }) => {
       patientName,
       email,
       phone,
+      price,
     };
 
-    fetch("http://localhost:5000/bookings", {
+    fetch("https://smile-care-server.vercel.app/bookings", {
       method: "POST",
       headers: {
         "content-type": "application/json",

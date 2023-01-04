@@ -11,11 +11,14 @@ const ManageDoctors = () => {
     queryKey: ["doctors"],
     queryFn: async () => {
       try {
-        const res = await fetch("http://localhost:5000/doctors", {
-          headers: {
-            authorization: `Bearer ${localStorage.getItem("smileToken")}`,
-          },
-        });
+        const res = await fetch(
+          "https://smile-care-server.vercel.app/doctors",
+          {
+            headers: {
+              authorization: `Bearer ${localStorage.getItem("smileToken")}`,
+            },
+          }
+        );
         const data = await res.json();
         return data;
       } catch (error) {
@@ -35,7 +38,7 @@ const ManageDoctors = () => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`http://localhost:5000/doctors/${id}`, {
+        fetch(`https://smile-care-server.vercel.app/doctors/${id}`, {
           method: "DELETE",
           headers: {
             authorization: `Bearer ${localStorage.getItem("smileToken")}`,

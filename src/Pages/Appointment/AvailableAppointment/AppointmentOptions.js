@@ -1,5 +1,5 @@
 const AppointmentOptions = ({ appointmentOption, setTreatment }) => {
-  const { name, slots } = appointmentOption;
+  const { name, slots, price } = appointmentOption;
   return (
     <div className="card shadow-lg dark:bg-accent">
       <div className="card-body">
@@ -11,6 +11,9 @@ const AppointmentOptions = ({ appointmentOption, setTreatment }) => {
         </p>
         <p className="text-center">
           {slots.length} {slots.length > 1 ? "spaces" : "space"} available
+        </p>
+        <p className="text-center">
+          <small>Price: ${price}</small>
         </p>
         <div className="card-actions justify-center">
           <label
