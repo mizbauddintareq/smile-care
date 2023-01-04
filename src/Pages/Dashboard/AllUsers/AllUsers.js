@@ -5,7 +5,11 @@ const AllUsers = () => {
   const { data: users = [], refetch } = useQuery({
     queryKey: ["users"],
     queryFn: async () => {
-      const res = await fetch("http://localhost:5000/users");
+      const res = await fetch("http://localhost:5000/users", {
+        headers: {
+          authorization: `Bearer ${localStorage.getItem("smileToken")}`,
+        },
+      });
       const data = await res.json();
       return data;
     },
@@ -41,7 +45,7 @@ const AllUsers = () => {
             </tr>
           </thead>
           <tbody>
-            {users.map((user, index) => (
+            {users?.map((user, index) => (
               <tr key={index}>
                 <th>{index + 1}</th>
                 <td>{user.name}</td>
