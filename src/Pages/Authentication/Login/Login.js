@@ -34,6 +34,7 @@ const Login = () => {
       .then((userCredential) => {
         setLoginUserEmail(data.email);
         successAlert("Login Successful");
+        navigate(from, { replace: true });
         reset();
       })
       .catch((error) => {
